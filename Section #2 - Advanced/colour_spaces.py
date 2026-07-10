@@ -1,12 +1,14 @@
 import cv2 as cv
-import matplotlib.pyplot as plt
 
-img = cv.imread('../Resources/Photos/park.jpg')
+# Load the image
+img = cv.imread('../Resources/Photos/avatar.jpg')
 
+# Check if the image was loaded
 if img is None:
-    print("Error: Could not load image.")
+    print("Error: Could not load image. Check the file path.")
     exit()
 
+# Display the original image
 cv.imshow('Park', img)
 
 # BGR to Grayscale
@@ -25,7 +27,7 @@ cv.imshow('LAB', lab)
 rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
 cv.imshow('RGB', rgb)
 
-# LAB to BGR
+# LAB back to BGR
 lab_bgr = cv.cvtColor(lab, cv.COLOR_LAB2BGR)
 cv.imshow('LAB --> BGR', lab_bgr)
 

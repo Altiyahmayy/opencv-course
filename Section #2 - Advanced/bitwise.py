@@ -1,30 +1,48 @@
-#pylint:disable=no-member
+# pylint:disable=no-member
 
 import cv2 as cv
 import numpy as np
 
-blank = np.zeros((400,400), dtype='uint8')
+# Create a blank color image
+blank = np.zeros((500, 500, 3), dtype='uint8')
 
-rectangle = cv.rectangle(blank.copy(), (30,30), (370,370), 255, -1)
-circle = cv.circle(blank.copy(), (200,200), 200, 255, -1)
+# Draw a blue rectangle (larger)
+rectangle = cv.rectangle(
+    blank.copy(),
+    (50, 50),      # Top-left corner
+    (450, 400),    # Bottom-right corner
+    (255, 0, 0),   # Blue (BGR)
+    -1
+)
 
-cv.imshow('Rectangle', rectangle)
-cv.imshow('Circle', circle)
+# Draw a yellow circle (smaller)
+circle = cv.circle(
+    blank.copy(),
+    (300, 250),    # Center
+    100,           # Radius
+    (0, 255, 255), # Yellow (BGR)
+    -1
+)
 
-# bitwise AND --> intersecting regions
+# Display the shapes
+cv.imshow('Blue Rectangle', rectangle)
+cv.imshow('Yellow Circle', circle)
+
+# Bitwise AND --> intersecting regions
 bitwise_and = cv.bitwise_and(rectangle, circle)
 cv.imshow('Bitwise AND', bitwise_and)
 
-# bitwise OR --> non-intersecting and intersecting regions
+# Bitwise OR --> union of both shapes
 bitwise_or = cv.bitwise_or(rectangle, circle)
 cv.imshow('Bitwise OR', bitwise_or)
 
-# bitwise XOR --> non-intersecting regions
+# Bitwise XOR --> non-overlapping regions
 bitwise_xor = cv.bitwise_xor(rectangle, circle)
 cv.imshow('Bitwise XOR', bitwise_xor)
 
-# bitwise NOT
+# Bitwise NOT
 bitwise_not = cv.bitwise_not(circle)
 cv.imshow('Circle NOT', bitwise_not)
 
 cv.waitKey(0)
+cv.destroyAllWindows()

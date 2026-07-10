@@ -2,13 +2,12 @@
 
 import cv2 as cv
 
-img = cv.imread('../Resources/Photos/cats.jpg')
-cv.imshow('Cats', img)
-
+img = cv.imread('../Resources/Photos/tb.jpg')
+cv.imshow('Random', img)
 cv.waitKey(0)
 
 # Reading Videos
-capture = cv.VideoCapture('../Resources/Videos/dog.mp4')
+capture = cv.VideoCapture('../Resources/Videos/rere.mp4')
 
 while True:
     isTrue, frame = capture.read()

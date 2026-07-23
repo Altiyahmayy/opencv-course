@@ -1,16 +1,20 @@
 #pylint:disable=no-member
-
 import cv2 as cv
+print(dir(cv.face))
 
-img = cv.imread('../Resources/Photos/group 1.jpg')
+# Load image (absolute path para sigurado)
+img = cv.imread('C:/activity 8/opencv-course/Resources/Photos/eh.jpg')
 cv.imshow('Group of 5 people', img)
 
+# Convert to grayscale
 gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 cv.imshow('Gray People', gray)
 
-haar_cascade = cv.CascadeClassifier('haar_face.xml')
+# Use built-in Haar cascade path
+haar_cascade = cv.CascadeClassifier(cv.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-faces_rect = haar_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=1)
+# Detect faces
+faces_rect = haar_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4)
 
 print(f'Number of faces found = {len(faces_rect)}')
 
@@ -18,7 +22,5 @@ for (x,y,w,h) in faces_rect:
     cv.rectangle(img, (x,y), (x+w,y+h), (0,255,0), thickness=2)
 
 cv.imshow('Detected Faces', img)
-
-
-
 cv.waitKey(0)
+cv.destroyAllWindows()

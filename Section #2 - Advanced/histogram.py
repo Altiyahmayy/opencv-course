@@ -1,45 +1,36 @@
-#pylint:disable=no-member
-
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
 
-img = cv.imread('../Resources/Photos/cats.jpg')
-cv.imshow('Cats', img)
+# Load image
+img = cv.imread('../Resources/Photos/cats.webp')
+cv.imshow('Original Cats', img)
 
+# Create blank mask
 blank = np.zeros(img.shape[:2], dtype='uint8')
 
-# gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-# cv.imshow('Gray', gray)
+# Circle mask (centered)
+mask = cv.circle(blank, (img.shape[1]//2, img.shape[0]//2), 120, 255, -1)
 
-mask = cv.circle(blank, (img.shape[1]//2,img.shape[0]//2), 100, 255, -1)
+# Apply mask
+masked = cv.bitwise_and(img, img, mask=mask)
+cv.imshow('Masked Cats', masked)
 
-masked = cv.bitwise_and(img,img,mask=mask)
-cv.imshow('Mask', masked)
-
-# GRayscale histogram
-# gray_hist = cv.calcHist([gray], [0], mask, [256], [0,256] )
-
-# plt.figure()
-# plt.title('Grayscale Histogram')
-# plt.xlabel('Bins')
-# plt.ylabel('# of pixels')
-# plt.plot(gray_hist)
-# plt.xlim([0,256])
-# plt.show()
-
-# Colour Histogram
-
-plt.figure()
-plt.title('Colour Histogram')
+# Colour histogram with labels and background color
+plt.figure(figsize=(8,4), facecolor='lightyellow')   # set figure background
+plt.title('Colour Histogram with Mask')
 plt.xlabel('Bins')
-plt.ylabel('# of pixels')
+plt.ylabel('Pixel Count')
+
 colors = ('b', 'g', 'r')
-for i,col in enumerate(colors):
+for i, col in enumerate(colors):
     hist = cv.calcHist([img], [i], mask, [256], [0,256])
-    plt.plot(hist, color=col)
+    plt.plot(hist, color=col, label=f'{col.upper()} channel')
     plt.xlim([0,256])
 
+plt.legend()
+plt.gca().set_facecolor('whitesmoke')   # set plot area background
 plt.show()
 
 cv.waitKey(0)
+cv.destroyAllWindows()

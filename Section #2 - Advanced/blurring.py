@@ -2,7 +2,7 @@
 
 import cv2 as cv
 
-img = cv.imread('../Resources/Photos/sea.jpg')
+img = cv.imread('../Resources/Photos/sunset.jpg')
 cv.imshow('Sea', img)
 
 # Averaging
